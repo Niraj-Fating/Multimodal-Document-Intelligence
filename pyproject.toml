@@ -1,0 +1,19 @@
+[project]
+name = "niraj-fating-ai-ml-llm"
+version = "0.1.0"
+description = "EduRankAI Domain 03 - Multimodal Document Evaluation Benchmark"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pypdf>=5.1.0",
+    "pymupdf>=1.25.0",
+    "pillow>=11.0.0",
+    "google-genai>=1.0.0",
+    "pandas>=2.2.0",
+    "matplotlib>=3.9.0",
+    "tabulate>=0.9.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EduRankAI Domain 03 Multimodal Document Benchmark Data Dictionary",
+  "version": "1.0.0",
+  "description": "Comprehensive schema definitions and metadata rules for the synthetic multimodal document evaluation benchmark.",
+  "document_inventory": [
+    {
+      "page_id": 1,
+      "filename_base": "page_1_income_statement",
+      "title": "Consolidated Statements of Operations (FY2022 - FY2024)",
+      "format_types": [".png", ".pdf"],
+      "layout_topology": "3-column financial income statement with borderless nested cells, indentation hierarchy, accounting rules, and subtotal lines.",
+      "domain": "Corporate Financial Accounting"
+    },
+    {
+      "page_id": 2,
+      "filename_base": "page_2_balance_sheet",
+      "title": "Segment Assets & Liabilities Balance Sheet with Footnotes",
+      "format_types": [".png", ".pdf"],
+      "layout_topology": "Segmented balance sheet with multi-tier nested tables and explicit footnote references [1], [2], [3], [*].",
+      "domain": "Segment Disclosures & Corporate Reporting"
+    },
+    {
+      "page_id": 3,
+      "filename_base": "page_3_quarterly_margins",
+      "title": "Quarterly Margin Dynamics (Q1 2023 - Q4 2024)",
+      "format_types": [".png", ".pdf"],
+      "layout_topology": "Grouped multi-bar visualization displaying Gross Margin %, Operating Margin %, and Net Margin % across 8 fiscal quarters with callout annotations.",
+      "domain": "Executive Visual Analytics"
+    },
+    {
+      "page_id": 4,
+      "filename_base": "page_4_mixed_layout",
+      "title": "Strategic Performance Briefing & Regional Execution",
+      "format_types": [".png", ".pdf"],
+      "layout_topology": "Mixed multi-column executive briefing featuring two narrative text columns alongside an embedded 4x4 structured summary table.",
+      "domain": "Management Discussion & Analysis (MD&A)"
+    },
+    {
+      "page_id": 5,
+      "filename_base": "page_5_fine_print_table",
+      "title": "Regulatory Capital Adequacy & Fee Structure Disclosures",
+      "format_types": [".png", ".pdf"],
+      "layout_topology": "Dense, high-information-density table with 8pt micro-typography, nested qualifiers, and tiered footnote asterisks (*, **, ***, †).",
+      "domain": "Regulatory Compliance & Risk Management"
+    },
+    {
+      "page_id": 6,
+      "filename_base": "page_6_dense_scientific_chart",
+      "title": "Distributed LLM Inference Scalability: Throughput vs. Energy Dissipation",
+      "format_types": [".png", ".pdf"],
+      "layout_topology": "Dense dual y-axes technical chart correlating Model Inference Throughput (tokens/s, left axis) with Energy Dissipation (Joules/token, right axis) across batch workloads with variance bands.",
+      "domain": "AI Systems & High Performance Computing"
+    }
+  ],
+  "benchmark_schema": {
+    "type": "object",
+    "required": [
+      "id",
+      "document",
+      "question",
+      "type",
+      "ground_truth_value",
+      "ground_truth_unit",
+      "tolerance_pct",
+      "target_location",
+      "is_adversarial"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^GT-[0-9]{3}$",
+        "description": "Unique benchmark query identifier (e.g., GT-001)."
+      },
+      "document": {
+        "type": "string",
+        "description": "Reference filename of the target synthetic document (PNG or PDF)."
+      },
+      "question": {
+        "type": "string",
+        "description": "Natural language query evaluating OCR, table extraction, mathematical reasoning, chart interpretation, or hallucination resistance."
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "direct_lookup",
+          "arithmetic_calculation",
+          "visual_chart_trend",
+          "adversarial_trap"
+        ],
+        "description": "Cognitive task category for the multimodal evaluator."
+      },
+      "ground_truth_value": {
+        "type": ["string", "number"],
+        "description": "Canonical target value. If adversarial, strictly set to 'NOT_PRESENT'."
+      },
+      "ground_truth_unit": {
+        "type": ["string", "null"],
+        "description": "Physical, financial, or statistical unit associated with the value."
+      },
+      "tolerance_pct": {
+        "type": "number",
+        "minimum": 0.0,
+        "description": "Permissible numerical error margin percentage (0.0 for exact lookups and adversarial traps; 1.0-2.0 for chart approximations)."
+      },
+      "target_location": {
+        "type": "string",
+        "description": "Spatial/structural grounding within the document layout."
+      },
+      "is_adversarial": {
+        "type": "boolean",
+        "description": "Flag designating out-of-domain or ungrounded trap queries designed to test hallucination resistance."
+      }
+    }
+  }
+}
